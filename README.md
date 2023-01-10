@@ -8,9 +8,8 @@
 + They can find each other as friends or not, but if they want to send messages to stranger, they need to wait for their accept, users also can change this feature in setting. They can block users, turn off notifications in selected chats, or turn whole application's notifications off until they turn on again or just for a period of time.
 
 - Technologies:
-    + HTML
-    + CSS
-    + Bootstrap
-    + Javascript
-    + Python
-    + Django
+    + HTML
+    + CSS
+    + Javascript
+    + Python
+    + Django
