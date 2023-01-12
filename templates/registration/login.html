@@ -1,0 +1,12 @@
+<!-- templates/registration/login.html -->
+{% extends 'base.html' %}
+{% block title %}Log In{% endblock title %}
+{% block content %}
+<h2>Log In</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <p>Click <a href="{% url 'signup' %}">here</a> to signup!</p>
+    <button type="submit">Log In</button>
+</form>
+{% endblock content %}

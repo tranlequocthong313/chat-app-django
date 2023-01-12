@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Join Room{% endblock %}
+
+{% block content %}
+<div class="text-center container">
+    <div style="max-height: 100vh;">
+        <h1>Rooms</h1>
+        <form action="{% url 'search_room' %}" method="post" class="d-flex">
+            {% csrf_token %}
+            <input class="form-control" type="text" name="room-name" placeholder="Room's Name">
+            <button class="btn btn-success" type="submit">Search</button>
+        </form>
+        <!-- <div style="min-height: 70vh; overflow: scroll; overflow-x: hidden;"> -->
+        <ul style="list-style: none;">
+            {% for room in rooms %}
+            <li>{{room.name}}
+                <a href="{% url 'chat_room' room.pk %}">join</a>
+            </li>
+            {% endfor %}
+        </ul>
+        <!-- </div> -->
+    </div>
+</div>
+{% endblock %}
