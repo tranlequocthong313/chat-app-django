@@ -8,7 +8,7 @@
 {{ user.avatar|json_script:"user-avatar" }}
 {{ user.username|json_script:"user-username" }}
 {{ room.id|json_script:"room-id" }}
-<div class="container">
+<div class="container text-center">
     <div style="max-height: 100vh;">
         <div>
             <!--HEADER-->
@@ -20,14 +20,25 @@
             <!--Content-->
             <ul style="list-style: none;" id="chat-section">
                 {% for msg in room.messages.all %}
-                <li>
-                    <div style="display: flex; align-items: center; justify-content: center;">
-                        <img style="width: 20px; height: 20px; border-radius: 50%;" src="{{msg.author.avatar}}"
-                            alt="{{msg.author.username}}">
-                        <p style="margin-left: 16px;">{{msg.content}}</p>
+                {% if user.username == msg.author.username %}
+                <li style="background-color: #f0f0f0; border-radius: 12px; margin: 12px 0;">
+                    <div class="d-flex align-items-center justify-content-center">
+                        <img style="width: 20px; height: 20px; border-radius: 50%; margin-right: 12px;"
+                            src="{{msg.author.avatar}}" alt="{{msg.author.username}}">
+                        <p>{{msg.author.username}}</p>
                     </div>
-                    <p>{{msg.send_date}}</p>
+                    <p style="margin-left: 16px;">{{msg.content}}</p>
                 </li>
+                {% else %}
+                <li style="border-radius: 12px; margin: 12px 0;">
+                    <div class="d-flex align-items-center justify-content-center">
+                        <img style="width: 20px; height: 20px; border-radius: 50%; margin-right: 12px;"
+                            src="{{msg.author.avatar}}" alt="{{msg.author.username}}">
+                        <p>{{msg.author.username}}</p>
+                    </div>
+                    <p style="margin-left: 16px;">{{msg.content}}</p>
+                </li>
+                {% endif %}
                 {% endfor %}
             </ul>
         </div>

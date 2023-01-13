@@ -55,4 +55,5 @@ class ChatRoomView(DetailView):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
         context["user"] = self.request.user
+        Room.objects.get(id=kwargs["object"].id).members.add(self.request.user.id)
         return context

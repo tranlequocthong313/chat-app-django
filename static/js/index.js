@@ -19,16 +19,29 @@ function receiveMessageFromServer(e) {
 
 function renderNewMessageToHTML(msg) {
     let chatSection = document.getElementById('chat-section')
-    chatSection.insertAdjacentHTML('beforeend', `
-        <li>
-            <div style="display: flex; align-items: center; justify-content: center;">
+    if (msg.authorName == getContentFromJSONElementById('user-username')) {
+        chatSection.insertAdjacentHTML('beforeend', `
+        <li style="background-color: #f0f0f0; border-radius: 12px; margin: 12px 0;">
+            <div class="d-flex align-items-center justify-content-center">
                 <img style="width: 20px; height: 20px; border-radius: 50%;" src="${msg.authorAvatar}"
                     alt="${msg.authorName}">
+                <p>${msg.authorName}</p>
                 <p style="margin-left: 16px;">${msg.content}</p>
             </div>
-            <p>${msg.sendDate}</p>
         </li>
         `)
+    } else {
+        chatSection.insertAdjacentHTML('beforeend', `
+        <li style="#f0f0f0; border-radius: 12px; margin: 12px 0;">
+            <div class="d-flex align-items-center justify-content-center">
+                <img style="width: 20px; height: 20px; border-radius: 50%;" src="${msg.authorAvatar}"
+                    alt="${msg.authorName}">
+                <p>${msg.authorName}</p>
+                <p style="margin-left: 16px;">${msg.content}</p>
+            </div>
+        </li>
+        `)
+    }
 }
 
 const form = document.getElementById('message-box-form')
@@ -41,9 +54,8 @@ function sendMessage(e) {
     const authorName = getContentFromJSONElementById('user-username')
     const authorAvatar = getContentFromJSONElementById('user-avatar')
     const roomID = getContentFromJSONElementById('room-id')
-    const sendDate = new Date().toLocaleString()
     chatSocket.send(JSON.stringify({
-        content, authorID, authorName, authorAvatar, roomID, sendDate
+        content, authorID, authorName, authorAvatar, roomID
     }))
     form.reset()
 }

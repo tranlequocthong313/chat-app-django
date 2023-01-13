@@ -11,15 +11,15 @@
             <input class="form-control" type="text" name="room-name" placeholder="Room's Name">
             <button class="btn btn-success" type="submit">Search</button>
         </form>
-        <!-- <div style="min-height: 70vh; overflow: scroll; overflow-x: hidden;"> -->
-        <ul style="list-style: none;">
-            {% for room in rooms %}
-            <li>{{room.name}}
-                <a href="{% url 'chat_room' room.pk %}">join</a>
-            </li>
-            {% endfor %}
-        </ul>
-        <!-- </div> -->
+        <div style="height: 70vh; overflow-y: scroll">
+            <ul style="list-style: none;">
+                {% for room in rooms %}
+                <li>{{room.name}}
+                    <a href="{% url 'chat_room' room.pk %}">join</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
 </div>
 {% endblock %}

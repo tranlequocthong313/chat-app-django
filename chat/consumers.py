@@ -9,20 +9,32 @@ class ChatConsumer(AsyncWebsocketConsumer):
     Consumer aka View in Django
     """
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.group_name = None
+
     async def connect(self) -> None:
-        self.room_name = self.scope["url_route"]["kwargs"]["room_name"]
-        self.room_group_name = f"chat_{self.room_name}"
-        await self.channel_layer.group_add(self.room_group_name, self.channel_name)  # type: ignore
+        if self.scope["user"].is_anonymous:
+            await self.close()
+        else:
+            await self.accept_connection()
+
+    async def accept_connection(self):
+        """
+        Connect user to group
+        """
+        self.group_name = "chat_" + self.scope["url_route"]["kwargs"]["room_name"]
+        await self.channel_layer.group_add(self.group_name, self.channel_name)  # type: ignore
         await self.accept()
 
     async def disconnect(self, code) -> None:
-        await self.channel_layer.group_discard(self.room_group_name, self.channel_name)  # type: ignore
+        await self.channel_layer.group_discard(self.group_name, self.channel_name)  # type: ignore
 
     async def receive(self, text_data=None, bytes_data=None) -> None:
         if text_data:
             await self.save_message(json.loads(text_data))
         await self.channel_layer.group_send(  # type: ignore
-            self.room_group_name,
+            self.group_name,
             {
                 "type": "send_message_to_all_channels_in_group",
                 "data": text_data,
