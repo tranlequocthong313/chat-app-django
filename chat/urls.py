@@ -1,9 +1,7 @@
 from django.urls import path
-from django.views.generic import TemplateView
 from .views import ChatJoinView, ChatRoomView, create_room, search_room
 
 urlpatterns = [
-    path("", TemplateView.as_view(template_name="chat_home.html"), name="chat_home"),
     path(
         "create_room/",
         create_room,

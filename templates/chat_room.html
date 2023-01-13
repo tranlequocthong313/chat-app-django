@@ -1,18 +1,24 @@
 {% extends 'base.html' %}
 
+
+
 {% block title %}Room {{room.name}}{% endblock %}
 {% block content %}
-<div class="text-center container">
+{{ user.id|json_script:"user-id" }}
+{{ user.avatar|json_script:"user-avatar" }}
+{{ user.username|json_script:"user-username" }}
+{{ room.id|json_script:"room-id" }}
+<div class="container">
     <div style="max-height: 100vh;">
         <div>
             <!--HEADER-->
-            <h4>{{room.name}}</h4>
+            <h4 id="room-name">{{room.name}}</h4>
             <p>{{room.members.all|length}} members</p>
         </div>
 
-        <div style="min-height: 70vh; overflow: scroll; overflow-x: hidden;">
+        <div style="height: 70vh; overflow-y: scroll;">
             <!--Content-->
-            <ul style="list-style: none;">
+            <ul style="list-style: none;" id="chat-section">
                 {% for msg in room.messages.all %}
                 <li>
                     <div style="display: flex; align-items: center; justify-content: center;">

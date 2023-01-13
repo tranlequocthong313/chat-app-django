@@ -1,11 +1,8 @@
-from django.urls import reverse
-from django.views.generic import CreateView, ListView, DetailView
-from .models import Message, Room
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth import get_user_model
-from django.http import HttpResponse, JsonResponse
+from django.views.generic import ListView, DetailView
+from django.http import HttpResponse
 from django.views.decorators.http import require_http_methods
 from django.shortcuts import redirect, render
+from .models import Room
 
 
 @require_http_methods(["POST"])
@@ -15,12 +12,11 @@ def create_room(request):
     """
     name = request.POST.get("room-name")
     if isinstance(name, str) and len(name) > 0:
-        new_room = Room(name=name)
-        new_room.save()
+        new_room = Room.objects.create(name=name)
         new_room.members.add(request.user)
         return redirect(new_room.get_absolute_url())
     else:
-        return HttpResponse("Invalid Room Name!")
+        return HttpResponse("Server Error!", status=500)
 
 
 @require_http_methods(["POST"])
@@ -33,7 +29,7 @@ def search_room(request):
     if searched_rooms:
         return render(request, "chat_join.html", {"rooms": searched_rooms})
     else:
-        return HttpResponse("Not Found!")
+        return HttpResponse("Not Found!", status=404)
 
 
 class ChatJoinView(ListView):
@@ -58,4 +54,5 @@ class ChatRoomView(DetailView):
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
+        context["user"] = self.request.user
         return context

@@ -19,6 +19,7 @@ class CustomUser(AbstractUser):
     friends = models.ManyToManyField("CustomUser", blank=True)
 
 
+# TODO: Creating this model for friend features
 class FriendRequest(models.Model):
     """
     Friend Request

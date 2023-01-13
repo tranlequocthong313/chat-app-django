@@ -113,6 +113,7 @@
                 "sha256:fa6693661a4c91757f4412306191b6dc88c1703f780c8234035eac011922bc01",
                 "sha256:fcd131dd944808b5bdb38e6f5b53013c5aa4f334c5cad0c72742f6eba4b73db0"
             ],
+            "markers": "os_name == 'nt' and implementation_name != 'pypy'",
             "version": "==1.15.1"
         },
         "channels": {
@@ -222,6 +223,7 @@
                 "sha256:814f528e8dead7d329833b91c5faa87d60bf71824cd12a7530b5526063d02cb4",
                 "sha256:90b77e79eaa3eba6de819a0c442c0b4ceefc341a7a2ab77d7562bf49f425c5c2"
             ],
+            "markers": "python_version >= '3.5'",
             "version": "==3.4"
         },
         "incremental": {

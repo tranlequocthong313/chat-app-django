@@ -14,12 +14,10 @@ class Message(models.Model):
     author = models.ForeignKey(
         get_user_model(), on_delete=models.CASCADE, related_name="messages"
     )
-    chat_room = models.ForeignKey(
-        "Room", on_delete=models.CASCADE, related_name="messages"
-    )
+    room = models.ForeignKey("Room", on_delete=models.CASCADE, related_name="messages")
 
     def __str__(self) -> str:
-        return self.content[:50]
+        return self.content[:50]  # This has nothing to do with subscripting
 
 
 class Room(models.Model):
@@ -37,4 +35,6 @@ class Room(models.Model):
         """
         Get absolute url after creating success.
         """
-        return reverse("chat_room", args=[str(self.id)])
+        return reverse(
+            "chat_room", args=[str(self.id)]
+        )  # This field will be created automatically by SQLite3
