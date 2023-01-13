@@ -181,8 +181,32 @@ class MessageTests(TestCase):
     Message tests
     """
 
+    content = "test"
+    username = "testuser"
+    room_name= "testroom"
+
     def setUp(self):
-        self.message = Message.objects.create(content="test")
+        self.message = Message.objects.create(
+            content=self.content,
+            author=get_user_model().objects.create(
+                username=self.username, password="password"
+            ),
+            room=Room.objects.create(name=self.room_name),
+        )
+
+    def test_string_representation(self):
+        """
+        Test __str__
+        """
+        self.assertEqual(str(self.message), self.message.content)
+
+    def test_message_data(self):
+        """
+        Test message's data
+        """
+        self.assertEqual(self.message.content, self.content)
+        self.assertEqual(self.message.author.username, self.username)
+        self.assertEqual(self.message.room.name, self.room_name)
 
 
 class ChannelConsumerTests(TestCase):
