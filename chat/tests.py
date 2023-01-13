@@ -1,7 +1,10 @@
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 from django.test import TestCase
+from .consumers import ChatConsumer
+from channels.testing import HttpCommunicator
 from .models import Message, Room
+
 
 test_user = get_user_model()
 
@@ -183,7 +186,7 @@ class MessageTests(TestCase):
 
     content = "test"
     username = "testuser"
-    room_name= "testroom"
+    room_name = "testroom"
 
     def setUp(self):
         self.message = Message.objects.create(
@@ -207,9 +210,3 @@ class MessageTests(TestCase):
         self.assertEqual(self.message.content, self.content)
         self.assertEqual(self.message.author.username, self.username)
         self.assertEqual(self.message.room.name, self.room_name)
-
-
-class ChannelConsumerTests(TestCase):
-    """
-    Channel consumer tests
-    """
