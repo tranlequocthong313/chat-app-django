@@ -26,7 +26,7 @@ class Room(models.Model):
     """
 
     members = models.ManyToManyField(get_user_model())
-    name = models.CharField(max_length=500)
+    name = models.CharField(max_length=30)
 
     def __str__(self) -> str:
         return self.name

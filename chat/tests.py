@@ -1,8 +1,6 @@
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 from django.test import TestCase
-from .consumers import ChatConsumer
-from channels.testing import HttpCommunicator
 from .models import Message, Room
 
 
@@ -145,13 +143,16 @@ class ChatRoomTests(TestCase):
 
     def setUp(self):
         self.room = Room.objects.create(name=self.room_name)
+        self.user = get_user_model().objects.create(
+            username="testuser", password="password"
+        )
+
         self.message = Message.objects.create(
             content="testmessage",
-            author=get_user_model().objects.create(
-                username="testuser", password="password"
-            ),
-            room_id=1,
+            author=self.user,
+            room_id=self.room.id,
         )
+        self.client.force_login(self.user)
 
     def test_view_status_code(self):
         """

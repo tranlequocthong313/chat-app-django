@@ -2,6 +2,7 @@ from django.views.generic import ListView, DetailView
 from django.http import HttpResponse
 from django.views.decorators.http import require_http_methods
 from django.shortcuts import redirect, render
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Room
 
 
@@ -42,7 +43,7 @@ class ChatJoinView(ListView):
     context_object_name = "rooms"
 
 
-class ChatRoomView(DetailView):
+class ChatRoomView(LoginRequiredMixin, DetailView):
     """
     Render room with its id
     """
@@ -56,4 +57,17 @@ class ChatRoomView(DetailView):
         context = super().get_context_data(**kwargs)
         context["user"] = self.request.user
         Room.objects.get(id=kwargs["object"].id).members.add(self.request.user.id)
+        context["messages"] = list(self.serialize_messages(context["room"]))
         return context
+
+    def serialize_messages(self, room):
+        """
+        Serialize messages in the room
+        """
+        for msg in room.messages.all():
+            local_dict = {}
+            local_dict["content"] = msg.content
+            local_dict["authorAvatar"] = msg.author.avatar
+            local_dict["authorName"] = msg.author.username
+            local_dict["sendDate"] = msg.send_date
+            yield local_dict

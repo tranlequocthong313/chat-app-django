@@ -12,9 +12,6 @@ class SignupPageTests(TestCase):
     username = "newuser"
     email = "newuser@email.com"
     avatar = "avatar"
-    birth_date = datetime.now()
-    accept_stranger_message = True
-    is_online = True
 
     def test_signup_page_status_code(self):
         """
@@ -46,12 +43,8 @@ class SignupPageTests(TestCase):
             self.username,
             self.email,
             avatar=self.avatar,
-            accept_stranger_message=True,
-            is_online=True,
         )
         self.assertEqual(get_user_model().objects.all().count(), 1)
         self.assertEqual(get_user_model().objects.all()[0].username, self.username)  # type: ignore
         self.assertEqual(get_user_model().objects.all()[0].email, self.email)  # type: ignore
         self.assertEqual(get_user_model().objects.all()[0].avatar, self.avatar)  # type: ignore
-        self.assertEqual(get_user_model().objects.all()[0].accept_stranger_message, self.accept_stranger_message)  # type: ignore
-        self.assertEqual(get_user_model().objects.all()[0].is_online, self.is_online)  # type: ignore

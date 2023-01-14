@@ -27,20 +27,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
         await self.channel_layer.group_add(self.group_name, self.channel_name)  # type: ignore
         await self.accept()
 
-    async def disconnect(self, code) -> None:
-        await self.channel_layer.group_discard(self.group_name, self.channel_name)  # type: ignore
-
-    async def receive(self, text_data=None, bytes_data=None) -> None:
-        if text_data:
-            await self.save_message(json.loads(text_data))
-        await self.channel_layer.group_send(  # type: ignore
-            self.group_name,
-            {
-                "type": "send_message_to_all_channels_in_group",
-                "data": text_data,
-            },
-        )
-
     @database_sync_to_async
     def save_message(self, message) -> None:
         """
@@ -52,15 +38,22 @@ class ChatConsumer(AsyncWebsocketConsumer):
             room_id=message["roomID"],
         ).save()
 
+    async def disconnect(self, code) -> None:
+        await self.channel_layer.group_discard(self.group_name, self.channel_name)  # type: ignore
+
+    async def receive(self, text_data=None, bytes_data=None) -> None:
+        if text_data:
+            await self.save_message(json.loads(text_data))
+        data = {}
+        data["type"] = "send_message_to_all_channels_in_group"
+        data["data"] = text_data
+        await self.channel_layer.group_send(self.group_name, data)  # type: ignore
+
     async def send_message_to_all_channels_in_group(self, event) -> None:
         """
         Send message to current group
         """
-        await self.send(
-            text_data=json.dumps(
-                {
-                    "type": "broadcast",
-                    "message": event["data"],
-                }
-            )
-        )
+        data = {}
+        data["type"] = "broadcast"
+        data["message"] = event["data"]
+        await self.send(text_data=json.dumps(data))

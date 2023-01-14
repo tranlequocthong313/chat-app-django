@@ -2,11 +2,23 @@
 {% extends 'base.html' %}
 {% block title %}Log In{% endblock title %}
 {% block content %}
-<h2>Log In</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <p>Click <a href="{% url 'signup' %}">here</a> to signup!</p>
-    <button type="submit">Log In</button>
-</form>
+<div class="center container app-container">
+    <h2>Log In</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input placeholder="Username" type="text" name="username" class="form-control" id="username"
+                aria-describedby="usernameHelp">
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input placeholder="Password" type="password" name="password" class="form-control" id="password">
+        </div>
+        <button type="login" class="btn btn-success">Login</button>
+        </br>
+        </br>
+        <small>Click <a href="{% url 'signup' %}">here</a> to signup!</small>
+    </form>
+</div>
 {% endblock content %}
