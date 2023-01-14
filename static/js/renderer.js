@@ -17,7 +17,6 @@ export function renderMessages(msgs) {
 }
 
 function insertIntoHTML(msg) {
-    console.log(msg)
     const content = getBubbleChatBoxStyleByMessageOwner(msg)
     chatSection.innerHTML += content
 }
