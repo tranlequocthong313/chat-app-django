@@ -32,11 +32,11 @@ class ChatConsumer(AsyncWebsocketConsumer):
         """
         Save new message to database
         """
-        Message(
+        Message.objects.create(
             content=message["content"],
             author_id=message["authorID"],
             room_id=message["roomID"],
-        ).save()
+        )
 
     async def disconnect(self, code) -> None:
         await self.channel_layer.group_discard(self.group_name, self.channel_name)  # type: ignore

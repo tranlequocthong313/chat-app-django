@@ -1,17 +1,9 @@
-import { renderMessages } from "./renderer.js";
-
 let chatSocket = null
+let url = `ws://${window.location.host}/ws/chat/`;
 
-export function connectToWebSocket(url) {
-    chatSocket = new WebSocket(url)
-    chatSocket.onmessage = receiveMessageFromServer
-}
-
-function receiveMessageFromServer(e) {
-    let data = JSON.parse(e.data)
-    if (data.type == 'broadcast') {
-        renderMessages([JSON.parse(data.message)])
-    }
+export function connectToWebSocket(roomID) {
+    chatSocket = new WebSocket(url + roomID)
+    return chatSocket
 }
 
 export function sendMessage(data) {

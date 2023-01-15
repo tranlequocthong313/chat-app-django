@@ -4,19 +4,16 @@ const chatSectionID = 'chat-section'
 const chatSection = document.getElementById(chatSectionID)
 
 export function renderMessages(msgs) {
-    let isScroll = false
     for (let i = 0; i < msgs.length; i++) {
-        if (i == msgs.length - 1) {
-            isScroll = true;
+        const isLastMessage = i == msgs.length - 1;
+        insertMessageIntoHTML(msgs[i]);
+        if (isLastMessage) {
+            scrollSmoothToBottomByID(chatSectionID);
         }
-        insertIntoHTML(msgs[i]);
-    }
-    if (isScroll) {
-        scrollSmoothToBottomByID(chatSectionID);
     }
 }
 
-function insertIntoHTML(msg) {
+function insertMessageIntoHTML(msg) {
     const content = getBubbleChatBoxStyleByMessageOwner(msg)
     chatSection.innerHTML += content
 }
