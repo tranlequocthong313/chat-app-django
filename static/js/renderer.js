@@ -4,13 +4,13 @@ const chatSectionID = 'chat-section'
 const chatSection = document.getElementById(chatSectionID)
 
 export function renderMessages(msgs) {
-    for (let i = 0; i < msgs.length; i++) {
+    msgs.forEach((msg, i) => {
         const isLastMessage = i == msgs.length - 1;
-        insertMessageIntoHTML(msgs[i]);
+        insertMessageIntoHTML(msg);
         if (isLastMessage) {
             scrollSmoothToBottomByID(chatSectionID);
         }
-    }
+    });
 }
 
 function insertMessageIntoHTML(msg) {
