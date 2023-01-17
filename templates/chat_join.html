@@ -4,14 +4,14 @@
 
 {% block content %}
 <div class="container">
-    <div style="margin-top: 24px; max-height: 100vh;">
-        <form action="{% url 'search_room' %}" method="post" class="d-flex" style="margin: 0 10%;">
+    <div class="chatJoinRoom">
+        <form action="{% url 'search_room' %}" method="post" class="d-flex searchForm">
             {% csrf_token %}
             <input class="form-control" type="text" name="room-name" placeholder="Room's Name">
             <button class="btn btn-success" type="submit">Search</button>
         </form>
-        <h3 style="margin: 20px 0;">Rooms</h3>
-        <div style="height: 70vh; overflow-y: scroll">
+        <h3 class="roomLabelHeader">Rooms</h3>
+        <div class="roomList">
             <ol>
                 {% for room in rooms %}
                 <li>{{room.name}}

@@ -4,6 +4,7 @@ const chatSectionID = 'chat-section'
 const chatSection = document.getElementById(chatSectionID)
 
 export function renderMessages(msgs) {
+    console.log(msgs)
     msgs.forEach((msg, i) => {
         const isLastMessage = i == msgs.length - 1;
         insertMessageIntoHTML(msg);
@@ -27,7 +28,7 @@ function getBubbleChatBoxStyleByMessageOwner(msg) {
             </div>
         </div>`
         : `<div class="d-flex align-items-center">
-            <img style="width: 20px; height: 20px; border-radius: 50%; margin-right: 8px;" src="${msg.authorAvatar}"
+            <img class="userMsgAvatar" src="${msg.authorAvatar}"
                 alt="${msg.authorName}">
             <div class="app-container">
                 <b style="color: #000">${msg.authorName}</b>

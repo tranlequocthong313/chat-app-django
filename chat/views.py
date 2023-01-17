@@ -64,7 +64,7 @@ class ChatRoomView(LoginRequiredMixin, DetailView):
         """
         Serialize messages in the room
         """
-        for msg in room.messages.all()[:10]:
+        for msg in room.messages.all():
             local_dict = {}
             local_dict["content"] = msg.content
             local_dict["authorAvatar"] = msg.author.avatar

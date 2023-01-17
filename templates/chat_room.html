@@ -12,10 +12,10 @@
 {{ room.id|json_script:"room-id" }}
 {{ messages|json_script:"messages" }}
 
-<div class="app-container" style="margin: 0 50px;">
-    <div id="chat-section" class="overflow-auto msgs" style="overflow-y: scroll; height:80vh;">
+<div class="app-container chatRoom">
+    <div id="chat-section" class="overflow-auto msgs chatSection">
     </div>
-    <form id="message-box-form" style="bottom:0; margin: 0% 10%;">
+    <form id="message-box-form" class="messageForm">
         <div class="input-group mb-3">
             <input type="text" class="form-control" name="message" value="" placeholder="Aa" aria-label="Message">
             <div class="input-group-append">

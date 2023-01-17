@@ -35,3 +35,60 @@ body {
     margin-left: auto;
     margin-right: 0;
 }
+
+.welcome {
+    font-size: 70px;
+}
+
+.chatRoom {
+    margin: 0 50px;
+}
+
+.chatSection {
+    overflow-y: scroll;
+    height: 80vh;
+}
+
+.messageForm {
+    bottom: 0;
+    margin: 0% 10%;
+}
+
+.chatJoinRoom {
+    margin-top: 24px;
+    max-height: 100vh;
+}
+
+.searchForm {
+    margin: 0 10%;
+}
+
+.roomLabelHeader {
+    margin: 20px 0;
+}
+
+.roomList {
+    height: 70vh;
+    overflow-y: scroll
+}
+
+.createRoomDropDown {
+    padding: 0;
+}
+
+.createRoomForm {
+    height: 100%
+}
+
+.userNavbarAvatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.userMsgAvatar {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
