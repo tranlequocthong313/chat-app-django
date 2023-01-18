@@ -58,6 +58,8 @@ class ChatRoomView(LoginRequiredMixin, DetailView):
         context["user"] = self.request.user
         Room.objects.get(id=kwargs["object"].id).members.add(self.request.user.id)
         context["messages"] = list(self.serialize_messages(context["room"]))
+        print(self.request.session.items())
+        print(self.request.user.id)
         return context
 
     def serialize_messages(self, room):
