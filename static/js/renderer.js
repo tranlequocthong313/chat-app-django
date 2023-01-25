@@ -1,10 +1,12 @@
+'use strict';
+
 import { getContentFromJSONElementById, scrollSmoothToBottomByID, getTimeSince } from "./helper.js";
 
-const chatSectionID = 'chat-section'
-const chatSection = document.getElementById(chatSectionID)
+const chatSectionID = 'chat-section';
+const chatSection = document.getElementById(chatSectionID);
 
-export function renderMessages(msgs) {
-    console.log(msgs)
+function renderMessages(msgs) {
+    console.log(msgs);
     msgs.forEach((msg, i) => {
         const isLastMessage = i == msgs.length - 1;
         insertMessageIntoHTML(msg);
@@ -15,8 +17,8 @@ export function renderMessages(msgs) {
 }
 
 function insertMessageIntoHTML(msg) {
-    const content = getBubbleChatBoxStyleByMessageOwner(msg)
-    chatSection.innerHTML += content
+    const content = getBubbleChatBoxStyleByMessageOwner(msg);
+    chatSection.innerHTML += content;
 }
 
 function getBubbleChatBoxStyleByMessageOwner(msg) {
@@ -36,5 +38,7 @@ function getBubbleChatBoxStyleByMessageOwner(msg) {
                 <span>${getTimeSince(msg.sendDate)} ago</span>
             </div>
         </div>
-        `)
+        `);
 }
+
+export default renderMessages;
