@@ -20,19 +20,6 @@ def create_room(request):
         return HttpResponse("Server Error!", status=500)
 
 
-@require_http_methods(["POST"])
-def search_room(request):
-    """
-    Search room with a full name or letters
-    """
-    name = request.POST.get("room-name")
-    searched_rooms = Room.objects.filter(name__startswith=name)
-    if searched_rooms:
-        return render(request, "chat_join.html", {"rooms": searched_rooms})
-    else:
-        return HttpResponse("Not Found!", status=404)
-
-
 class ChatJoinView(ListView):
     """
     Render current exist rooms view.
@@ -41,6 +28,20 @@ class ChatJoinView(ListView):
     model = Room
     template_name = "chat_join.html"
     context_object_name = "rooms"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        query = self.request.GET.get('q', None)
+        if (query):
+            context['rooms'] = search_room(query)
+        return context
+
+
+def search_room(query):
+    """
+    Search room with a full name or letters
+    """
+    return Room.objects.filter(name__startswith=query)
 
 
 class ChatRoomView(LoginRequiredMixin, DetailView):

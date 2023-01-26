@@ -5,13 +5,13 @@
 {% block content %}
 <div class="container">
     <div class="chatJoinRoom">
-        <form action="{% url 'search_room' %}" method="post" class="d-flex searchForm">
-            {% csrf_token %}
-            <input class="form-control" type="text" name="room-name" placeholder="Room's Name">
+        <form action="{% url 'chat_join' %}" class="d-flex searchForm">
+            <input class="form-control" type="text" name="q" placeholder="Room's Name">
             <button class="btn btn-success" type="submit">Search</button>
         </form>
         <h3 class="roomLabelHeader">Rooms</h3>
         <div class="roomList">
+            {% if rooms|length > 0 %}
             <ol>
                 {% for room in rooms %}
                 <li>{{room.name}}
@@ -19,6 +19,9 @@
                 </li>
                 {% endfor %}
             </ol>
+            {% else %}
+            <p>Not found</p>
+            {% endif %}
         </div>
     </div>
 </div>

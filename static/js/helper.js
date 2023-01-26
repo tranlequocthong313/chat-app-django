@@ -1,5 +1,14 @@
 'use strict';
 
+/**
+ * Validate types more correctly than typeof
+ * @param {*} value 
+ * @returns type of the value with capitalizing first letter
+ */
+function typeOf(value) {
+    return Object.prototype.toString.call(value).slice(8, -1);
+}
+
 // Javascript can't get data from Django's views directly
 // so it provides the JSON element feature and Javascript
 // can get the data like get DOM elements.

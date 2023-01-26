@@ -2,8 +2,8 @@
 
 import { connectToWebSocket, sendMessage } from "./socket.js";
 import { getContentFromJSONElementById } from "./helper.js";
-import { renderMessages } from "./renderer.js";
-import { playReceivedMsgSFX } from "./audio.js";
+import renderMessages from "./renderer.js";
+import playReceivedMsgSFX from "./audio.js";
 
 function initApp() {
     const roomID = getContentFromJSONElementById('room-id');

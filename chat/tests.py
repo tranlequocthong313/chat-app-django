@@ -43,7 +43,7 @@ class CreateRoomTests(TestCase):
         """
         Test absolute url
         """
-        self.assertEqual(self.room.get_absolute_url(), "/chat/chat_room/1")
+        self.assertEqual(self.room.get_absolute_url(), "/room/1")
 
     def test_new_room_data(self):
         """
@@ -64,7 +64,7 @@ class CreateRoomTests(TestCase):
         fail_response = self.client.post(reverse("chat_create"), {"room-name": ""})
         self.assertEqual(success_response.status_code, 302)
         self.assertEqual(fail_response.status_code, 500)
-        self.assertRedirects(success_response, "/chat/chat_room/2", 302, 200)
+        self.assertRedirects(success_response, "/room/2", 302, 200)
         self.assertRedirects(
             success_response, reverse("chat_room", args=[str(2)]), 302, 200
         )
@@ -87,7 +87,7 @@ class JoinChatRoomViewTests(TestCase):
         """
         Test getting 200 status code when get url
         """
-        response = self.client.get("/chat/join_room/")
+        response = self.client.get("/rooms")
         self.assertEqual(response.status_code, 200)
 
     def test_view_url_by_name(self):
@@ -109,13 +109,13 @@ class JoinChatRoomViewTests(TestCase):
         """
         Test searching room chat by name
         """
-        success_response = self.client.post(
+        success_response = self.client.get(
             reverse("search_room"),
-            {"room-name": self.room_name},
+            {"q": self.room_name},
         )
-        fail_response = self.client.post(
+        fail_response = self.client.get(
             reverse("search_room"),
-            {"room-name": "fail"},
+            {"q": "fail"},
         )
         self.assertEqual(success_response.status_code, 200)
         self.assertTemplateUsed(success_response, "chat_join.html")
@@ -158,7 +158,7 @@ class ChatRoomTests(TestCase):
         """
         Test view status code
         """
-        url_resp = self.client.get("/chat/chat_room/1")
+        url_resp = self.client.get("/room/1")
         self.assertEqual(url_resp.status_code, 200)
         name_resp = self.client.get(reverse("chat_room", args=[str(1)]))
         self.assertEqual(name_resp.status_code, 200)

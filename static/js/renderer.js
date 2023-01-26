@@ -6,7 +6,6 @@ const chatSectionID = 'chat-section';
 const chatSection = document.getElementById(chatSectionID);
 
 function renderMessages(msgs) {
-    console.log(msgs);
     msgs.forEach((msg, i) => {
         const isLastMessage = i == msgs.length - 1;
         insertMessageIntoHTML(msg);

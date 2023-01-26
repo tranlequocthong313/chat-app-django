@@ -17,7 +17,7 @@ class SignupPageTests(TestCase):
         """
         Test getting 200 status code when get url
         """
-        response = self.client.get("/accounts/signup/")
+        response = self.client.get("/account/signup")
         self.assertEqual(response.status_code, 200)
 
     def test_view_url_by_name(self):

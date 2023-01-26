@@ -11,7 +11,7 @@ class HomePageViewTest(TestCase):
         """
         Test status code 200 if get correct url
         """
-        resp = self.client.get("/")
+        resp = self.client.get("")
         self.assertEqual(resp.status_code, 200)
 
     def test_view_url_by_name(self):
